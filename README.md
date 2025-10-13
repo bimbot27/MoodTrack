@@ -1,4 +1,60 @@
-# Getting Started with Create React App
+# MoodTrack
+
+Aplicación web para detección y seguimiento de la depresión con encuestas PHQ‑9, MADRS y Beck (BDI‑II). Incluye backend en Express con MySQL, autenticación JWT, y frontend en React.
+
+## Requisitos
+
+- Node.js 18+
+- MySQL 8 (base de datos accesible)
+
+## Configuración
+
+1. Crea un archivo `.env` en la raíz (ya añadido) y ajusta credenciales:
+
+```
+DB_HOST=localhost
+DB_NAME=moodtrack
+DB_USER=root
+DB_PASSWORD=toor
+JWT_SECRET=cámbiame
+REACT_APP_API_URL=http://localhost:4000
+```
+
+2. Instala dependencias e inicializa:
+
+```
+npm install
+```
+
+3. Crea la base en MySQL (si no existe):
+
+```
+CREATE DATABASE moodtrack CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+```
+
+4. Arranca en desarrollo (frontend + backend):
+
+```
+npm run dev
+```
+
+El servidor API escucha en `http://localhost:4000` y el frontend en `http://localhost:3000`.
+
+Al iniciar el backend, se crean tablas y se cargan preguntas si aún no existen.
+
+## Rutas principales
+
+- `POST /api/auth/register` { email, password }
+- `POST /api/auth/login` { email, password }
+- `GET /api/surveys/:type/questions` — `:type` en { phq9, madrs, beck }
+- `POST /api/surveys/:type/submit` — body { answers: number[] } (requiere JWT)
+- `GET /api/me/summary` (JWT)
+- `GET /api/me/responses` (JWT)
+
+## Notas
+
+- El frontend requiere `REACT_APP_API_URL` definido para apuntar al backend.
+- La severidad se calcula según rangos comunes de cada instrumento.
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
